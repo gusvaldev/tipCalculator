@@ -1,9 +1,10 @@
 import { menuItems } from "./data/db";
 import MenuItem from "./components/MenuItem";
 import useOrder from "./hooks/useOrder";
+import OrderContent from "./components/OrderContent";
 
 function App() {
-  const { addItem } = useOrder();
+  const { order, addItem, removeItem, decreaseQuantity } = useOrder();
   return (
     <>
       <header className="bg-teal-400 py-5">
@@ -23,8 +24,12 @@ function App() {
           </div>
         </div>
 
-        <div>
-          <h2>Consumo</h2>
+        <div className="border border-dashed border-slate-400 p-5 rounded-lg space-y-10">
+          <OrderContent
+            removeItem={removeItem}
+            order={order}
+            decreaseQuantity={decreaseQuantity}
+          />
         </div>
       </main>
     </>

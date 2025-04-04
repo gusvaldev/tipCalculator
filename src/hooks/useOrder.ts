@@ -20,9 +20,29 @@ export default function useOrder() {
     }
   };
 
-  console.log(order);
+  const removeItem = (id: MenuItems["id"]) => {
+    setOrder(order.filter((item) => item.id !== id));
+  };
+
+  const decreaseQuantity = (id: MenuItems["id"]) => {
+    const orderValue = order.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          quantity: item.quantity! - 1,
+        };
+      }
+
+      return item;
+    });
+
+    setOrder(orderValue.filter((item) => item.quantity! > 0));
+  };
 
   return {
+    order,
     addItem,
+    removeItem,
+    decreaseQuantity,
   };
 }
