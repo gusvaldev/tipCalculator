@@ -2,9 +2,19 @@ import { menuItems } from "./data/db";
 import MenuItem from "./components/MenuItem";
 import useOrder from "./hooks/useOrder";
 import OrderContent from "./components/OrderContent";
+import OrderTotal from "./components/OrderTotal";
+import TipPercentage from "./components/TipPercentage";
 
 function App() {
-  const { order, addItem, removeItem, decreaseQuantity } = useOrder();
+  const {
+    order,
+    addItem,
+    removeItem,
+    decreaseQuantity,
+    tip,
+    setTip,
+    placeOrder,
+  } = useOrder();
   return (
     <>
       <header className="bg-teal-400 py-5">
@@ -25,11 +35,23 @@ function App() {
         </div>
 
         <div className="border border-dashed border-slate-400 p-5 rounded-lg space-y-10">
-          <OrderContent
-            removeItem={removeItem}
-            order={order}
-            decreaseQuantity={decreaseQuantity}
-          />
+          {order.length > 0 ? (
+            <>
+              <OrderContent
+                removeItem={removeItem}
+                order={order}
+                decreaseQuantity={decreaseQuantity}
+              />
+
+              <TipPercentage setTip={setTip} tip={tip} />
+
+              <OrderTotal order={order} tip={tip} placeOrder={placeOrder} />
+            </>
+          ) : (
+            <p className="text-center text-2xl font-black">
+              No hay productos en la orden
+            </p>
+          )}
         </div>
       </main>
     </>
